@@ -68,7 +68,7 @@ describe SportsDataApi::Ncaamb::Team, vcr: {
       subject { game_summary.home_team.players[1] }
       it { should be_an_instance_of(SportsDataApi::Ncaamb::Player) }
       it 'should have an id' do
-        expect(subject.player[:id]).to eq "e4bd8c65-a40b-42e3-8327-6913045bf008"
+        expect(subject.player[:id]).to eq "cfc15d5a-efc8-443a-9868-39853a28b849"
       end
       it 'should have a full_name' do
         expect(subject.player[:full_name]).to eq "Nigel Hayes"
@@ -97,7 +97,7 @@ describe SportsDataApi::Ncaamb::Team, vcr: {
       its(:stats){ should be_an_instance_of(SportsDataApi::Stats) }
 
       context 'stats' do
-        subject { game_summary.home_team.players.first.stats.statistics }
+        subject { game_summary.home_team.players[1].stats.statistics }
         it 'should have minutes' do
           expect(subject[:minutes]).to eql '33:00'
         end
@@ -108,7 +108,7 @@ describe SportsDataApi::Ncaamb::Team, vcr: {
           expect(subject[:field_goals_att]).to eql '7'
         end
         it 'should have field_goals_pct' do
-          expect(subject[:field_goals_pct]).to eql '29.0'
+          expect(subject[:field_goals_pct]).to eql '28.6'
         end
         it 'should have two_points_made' do
           expect(subject[:two_points_made]).to eql '2'
@@ -172,9 +172,6 @@ describe SportsDataApi::Ncaamb::Team, vcr: {
         end
         it 'should have flagrant_fouls' do
           expect(subject[:flagrant_fouls]).to eql '0'
-        end
-        it 'should have pls_min' do
-          expect(subject[:pls_min]).to eql '3'
         end
         it 'should have points' do
           expect(subject[:points]).to eql '11'
