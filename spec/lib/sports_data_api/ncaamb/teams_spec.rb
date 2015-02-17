@@ -11,13 +11,14 @@ describe SportsDataApi::Ncaamb::Teams, vcr: {
     SportsDataApi::Ncaamb.teams
   end
 
-  let(:url) { 'http://api.sportsdatallc.org/ncaamb-t3/league/hierarchy.xml' }
+  let(:url) { 'http://api.sportsdatallc.org/ncaamb-t3/league/hierarchy.json' }
 
   let(:badgers_xml) do
-    str = RestClient.get(url, params: { api_key: api_key(:ncaamb) }).to_s
-    xml = Nokogiri::XML(str)
-    xml.remove_namespaces!
-    xml.xpath('/league/division/conference/team[@id=\'c7569eae-5b93-4197-b204-6f3a62146b25\']')
+    all_team_hash = MultiJson.load(RestClient.get(url, params: { api_key: api_key(:ncaamb) }).to_s)
+    all_team_hash["divisions"].
+      find{|x| x["name"] == "NCAA Division I"}["conferences"].
+      find{|x| x["alias"] == "BIG10"}["teams"].
+      find{|x| x["name"] == "Badgers"}
   end
 
   let(:badgers) { SportsDataApi::Ncaamb::Team.new(badgers_xml, "BIG10", "D1") }

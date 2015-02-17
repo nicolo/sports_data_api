@@ -4,18 +4,18 @@ module SportsDataApi
       attr_reader :id, :name, :market, :alias, :conference, :division,
                   :stats, :players, :points
 
-      def initialize(xml, conference = nil, division = nil)
-        xml = xml.first if xml.is_a? Nokogiri::XML::NodeSet
-        if xml.is_a? Nokogiri::XML::Element
-          @id = xml['id']
-          @name = xml['name']
-          @market = xml['market']
-          @alias = xml['alias']
-          @points = xml['points'] ? xml['points'].to_i : nil
+      def initialize(team_hash, conference = nil, division = nil)
+        if team_hash
+          @id = team_hash['id']
+          @name = team_hash['name']
+          @market = team_hash['market']
+          @alias = team_hash['alias']
+          @points = team_hash['points'] ? team_hash['points'].to_i : nil
           @conference = conference
           @division = division
-          @players = xml.xpath("players/player").map do |player_xml|
-            Player.new(player_xml)
+          players = team_hash["players"] || []
+          @players = players.map do |player_hash|
+            Player.new(player_hash)
           end
         end
       end

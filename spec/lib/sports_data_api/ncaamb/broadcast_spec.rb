@@ -8,11 +8,11 @@ describe SportsDataApi::Ncaamb::Broadcast, vcr: {
   let(:daily_schedule) do
     SportsDataApi.set_access_level(:ncaamb, 't')
     SportsDataApi.set_key(:ncaamb, api_key(:ncaamb))
-    SportsDataApi::Ncaamb.daily(2015, 2, 25)
+    SportsDataApi::Ncaamb.daily(2015, 2, 4)
   end
   context 'results from daily schedule fetch' do
     subject { daily_schedule.first.broadcast }
-    its(:network) { should eq 'ESPN2' }
-    its(:satellite) { should eq '209' }
+    its(:network) { should eq 'ESPNews' }
+    its(:satellite) { should eq '207' }
   end
 end

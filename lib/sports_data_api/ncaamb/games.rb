@@ -4,11 +4,11 @@ module SportsDataApi
       include Enumerable
       attr_reader :games, :date
 
-      def initialize(xml)
-        @date = xml.first['date']
-        
-        @games = xml.xpath("games/game").map do |game_xml|
-          Game.new(date: @date, xml: game_xml)
+      def initialize(games_hash)
+        @date = games_hash['date']
+
+        @games = games_hash['games'].map do |game_hash|
+          Game.new(date: @date, game_hash: game_hash)
         end
       end
 

@@ -97,7 +97,7 @@ describe SportsDataApi::Ncaamb::Team, vcr: {
       its(:stats){ should be_an_instance_of(SportsDataApi::Stats) }
 
       context 'stats' do
-        subject { game_summary.home_team.players[1].stats.statistics }
+        subject { game_summary.home_team.players[1].statistics }
         it 'should have minutes' do
           expect(subject[:minutes]).to eql '33:00'
         end

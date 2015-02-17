@@ -6,26 +6,25 @@ module SportsDataApi
         :date, :half, :clock
 
       def initialize(args={})
-        xml = args.fetch(:xml)
+        game_hash = args.fetch(:game_hash)
         @year = args[:year] ? args[:year].to_i : nil
         @season = args[:season] ? args[:season].to_sym : nil
         @date = args[:date]
 
-        xml = xml.first if xml.is_a? Nokogiri::XML::NodeSet
-        if xml.is_a? Nokogiri::XML::Element
-          @id = xml['id']
-          @scheduled = Time.parse xml['scheduled']
-          @home = xml['home_team']
-          @away = xml['away_team']
-          @status = xml['status']
-          @clock = xml['clock']
-          @half = xml['half'] ? xml['half'].to_i : nil
-
-          team_xml = xml.xpath('team')
-          @home_team = Team.new(team_xml.first)
-          @away_team = Team.new(team_xml.last)
-          @venue = Venue.new(xml.xpath('venue'))
-          @broadcast = Broadcast.new(xml.xpath('broadcast'))
+        if game_hash
+          home_hash = game_hash['home']
+          away_hash = game_hash['away']
+          @id = game_hash['id']
+          @scheduled = Time.parse game_hash['scheduled']
+          @home = home_hash ? home_hash['id'] : nil
+          @away = away_hash ? away_hash['id'] : nil
+          @status = game_hash['status']
+          @clock = game_hash['clock']
+          @half = game_hash['half'] ? game_hash['half'].to_i : nil
+          @home_team = Team.new(home_hash)
+          @away_team = Team.new(away_hash)
+          @venue = Venue.new(game_hash['venue'])
+          @broadcast = Broadcast.new(game_hash['broadcast'])
         end
       end
 

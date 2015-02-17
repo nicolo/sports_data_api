@@ -65,10 +65,10 @@ describe SportsDataApi::Ncaamb::Game, vcr: {
   context 'results from daily schedule fetch' do
     subject { daily_schedule.first }
     it { should be_an_instance_of(SportsDataApi::Ncaamb::Game) }
-    its(:id) { should eq '219e5826-cae0-4d60-ab43-6076722524cf' }
+    its(:id) { should eq 'ce434df9-1d8e-45e4-a196-c7c279a13c89' }
     its(:scheduled) { should eq Time.new(2015, 2, 25, 19, 00, 00, '-05:00') }
-    its(:home) { should eq '9b66e1e0-aace-4671-9be2-54c8acf5ecfc' }
-    its(:away) { should eq 'c1c1e6df-a383-4fbd-ba7b-32d4f9ef9518' }
+    its(:home) { should eq '3eacc387-0ad8-4c5e-a666-c8ab447d224f' }
+    its(:away) { should eq '0796c3b6-5308-4aa0-8fdc-c65d39b043c6' }
     its(:status) { should eq 'scheduled' }
     its(:half) { should eq nil }
     its(:clock) { should eq nil }
