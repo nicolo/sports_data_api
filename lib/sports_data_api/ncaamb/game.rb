@@ -29,22 +29,19 @@ module SportsDataApi
         end
       end
 
-      ##
-      # Wrapper for Nba.game_summary
-      # TODO
       def summary
         Ncaamb.game_summary(@id)
       end
 
       ##
-      # Wrapper for Nba.pbp (Nba.play_by_play)
+      # Wrapper for NCAAMB.pbp (NCAAMB.play_by_play)
       # TODO
       def pbp
         raise NotImplementedError
       end
 
       ##
-      # Wrapper for Nba.boxscore
+      # Wrapper for NCAAMB.boxscore
       # TODO
       def boxscore
         raise NotImplementedError

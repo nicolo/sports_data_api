@@ -17,6 +17,9 @@ module SportsDataApi
     autoload :Season, File.join(DIR, 'season')
     autoload :Venue, File.join(DIR, 'venue')
     autoload :Broadcast, File.join(DIR, 'broadcast')
+    autoload :TournamentList, File.join(DIR, 'tournament_list')
+    autoload :Tournament, File.join(DIR, 'tournament')
+    autoload :TournamentSchedule, File.join(DIR, 'tournament_schedule')
 
     ##
     # Fetches NCAAAMB season schedule for a given year and season
@@ -59,6 +62,22 @@ module SportsDataApi
       response = self.response_xml(version, "/games/#{year}/#{month}/#{day}/schedule.xml")
 
       return Games.new(response.xpath('league/daily-schedule'))
+    end
+
+    # Fetches NCAAAMB tournaments for a given year and season
+    def self.tournament_list(year, season, version = DEFAULT_VERSION)
+      season = season.to_s.upcase.to_sym
+      raise SportsDataApi::Ncaamb::Exception.new("#{season} is not a valid season") unless TournamentList.valid?(season)
+
+      response = self.response_xml(version, "/tournaments/#{year}/#{season}/schedule.xml")
+
+      return TournamentList.new(response.xpath("/league/season-schedule"))
+    end
+
+    def self.tournament_schedule(tournament_id, version = DEFAULT_VERSION)
+      response = self.response_xml(version, "/tournaments/#{tournament_id}/schedule.xml")
+
+      return TournamentSchedule.new(response.xpath("/league/tournament-schedule"))
     end
 
     private
