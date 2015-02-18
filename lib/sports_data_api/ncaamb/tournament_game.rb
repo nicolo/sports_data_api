@@ -15,7 +15,7 @@ module SportsDataApi
           @id = xml['id']
         end
 
-        super(Game.new(xml: xml))
+        super(Game.new(year: args[:year], season: args[:season], xml: xml))
       end
 
     end

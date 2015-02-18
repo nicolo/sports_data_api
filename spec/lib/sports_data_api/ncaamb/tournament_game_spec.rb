@@ -8,7 +8,7 @@ describe SportsDataApi::Ncaamb::TournamentGame, vcr: {
   let(:tournament_schedule) do
     SportsDataApi.set_access_level(:ncaamb, 't')
     SportsDataApi.set_key(:ncaamb, api_key(:ncaamb))
-    SportsDataApi::Ncaamb.tournament_schedule("541807c8-9a76-4999-a2ad-c0ba8a553c3d")
+    SportsDataApi::Ncaamb.tournament_schedule(2013, :PST, "541807c8-9a76-4999-a2ad-c0ba8a553c3d")
   end
   context 'results from tournament schedule' do
     subject { tournament_schedule.games[5] }
@@ -17,6 +17,8 @@ describe SportsDataApi::Ncaamb::TournamentGame, vcr: {
     its(:round_number) { should eq 5 }
     its(:round_name) { should eq 'Elite 8' }
     its(:bracket) { should eq 'West Regional' }
+    its(:year) { should eq 2013 }
+    its(:season) { should eq :PST }
     its(:scheduled) { should eq Time.new(2014, 3, 29, 20, 49, 00, '-04:00') }
     its(:home) { should eq '9b166a3f-e64b-4825-bb6b-92c6f0418263' }
     its(:away) { should eq 'c7569eae-5b93-4197-b204-6f3a62146b25' }

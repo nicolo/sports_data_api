@@ -75,10 +75,11 @@ module SportsDataApi
       return TournamentList.new(response.xpath("/league/season-schedule"))
     end
 
-    def self.tournament_schedule(tournament_id, version = DEFAULT_VERSION)
+    def self.tournament_schedule(year, season, tournament_id, version = DEFAULT_VERSION)
       response = self.response_xml(version, "/tournaments/#{tournament_id}/schedule.xml")
+      raise SportsDataApi::Ncaamb::Exception.new("#{season} is not a valid season") unless TournamentSchedule.valid?(season)
 
-      return TournamentSchedule.new(response.xpath("/league/tournament-schedule"))
+      return TournamentSchedule.new(year, season, response.xpath("/league/tournament-schedule"))
     end
 
     private

@@ -22,7 +22,7 @@ module SportsDataApi
       end
 
       def schedule
-        Ncaamb.tournament_schedule(@id)
+        Ncaamb.tournament_schedule(year, season, id)
       end
 
     end
