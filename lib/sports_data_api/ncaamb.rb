@@ -20,6 +20,7 @@ module SportsDataApi
     autoload :TournamentList, File.join(DIR, 'tournament_list')
     autoload :Tournament, File.join(DIR, 'tournament')
     autoload :TournamentSchedule, File.join(DIR, 'tournament_schedule')
+    autoload :TournamentGame, File.join(DIR, 'tournament_game')
 
     ##
     # Fetches NCAAAMB season schedule for a given year and season
